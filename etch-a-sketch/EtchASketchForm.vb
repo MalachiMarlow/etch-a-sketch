@@ -19,14 +19,12 @@
         AddHandler DisplayPictureBox.MouseDown, AddressOf displayPictureBox_MouseDown
         AddHandler DisplayPictureBox.MouseUp, AddressOf displayPictureBox_MouseUp
         AddHandler DisplayPictureBox.MouseClick, AddressOf displayPictureBox_MouseClick
-        'DisplayPictureBox.ToolTipText = "Draw within the picture box"
 
         ' Button: Select Color
         SelectColorButton.Text = "Select Color"
         selectColorButton.Location = New Point(10, 500)
         selectColorButton.Size = New Size(100, 30)
         AddHandler SelectColorButton.Click, AddressOf selectColorButton_Click
-        'SelectColorButton.ToolTipText = "Select drawing color"
 
         ' Button: Draw Waveforms
         DrawWaveformsButton.Text = "Draw Waveforms"
@@ -34,14 +32,12 @@
         drawWaveformsButton.Size = New Size(120, 30)
         drawWaveformsButton.DialogResult = DialogResult.Yes
         AddHandler DrawWaveformsButton.Click, AddressOf drawWaveformsButton_Click
-        'DrawWaveformsButton.ToolTipText = "Draw waveforms"
 
         ' Button: Clear
         ClearButton.Text = "Clear"
         clearButton.Location = New Point(250, 500)
         clearButton.Size = New Size(80, 30)
         AddHandler ClearButton.Click, AddressOf clearButton_Click
-        'ClearButton.ToolTipText = "Clear the picture box"
 
         ' Button: Exit
         ExitButton.Text = "Exit"
@@ -50,16 +46,16 @@
         AddHandler ExitButton.Click, AddressOf exitButton_Click
         'ExitButton.ToolTipText = "Exit the application"
 
-        ' Menu Strip
+
         Dim menuStrip As New MenuStrip()
 
-        ' File menu
+
         Dim fileMenu As New ToolStripMenuItem("File")
         Dim fileExit As New ToolStripMenuItem("Exit")
         AddHandler fileExit.Click, AddressOf exitButton_Click
         fileMenu.DropDownItems.Add(fileExit)
 
-        ' Edit menu
+
         Dim editMenu As New ToolStripMenuItem("Edit")
         Dim selectColorMenu As New ToolStripMenuItem("Select Color")
         AddHandler selectColorMenu.Click, AddressOf selectColorButton_Click
@@ -71,7 +67,6 @@
         editMenu.DropDownItems.Add(drawWaveformsMenu)
         editMenu.DropDownItems.Add(clearMenu)
 
-        ' Help menu
         Dim helpMenu As New ToolStripMenuItem("Help")
         Dim aboutMenu As New ToolStripMenuItem("About")
         helpMenu.DropDownItems.Add(aboutMenu)
@@ -82,7 +77,7 @@
         Me.MainMenuStrip = menuStrip
         Me.Controls.Add(menuStrip)
 
-        ' Add controls to the form
+
         Me.Controls.Add(DisplayPictureBox)
         Me.Controls.Add(selectColorButton)
         Me.Controls.Add(drawWaveformsButton)
@@ -111,8 +106,8 @@
 
         Private Sub displayPictureBox_MouseClick(sender As Object, e As MouseEventArgs)
             If e.Button = MouseButtons.Middle Then
-                selectColorButton_Click(sender, e) ' Open color dialog
-            End If
+            selectColorButton_Click(sender, e)
+        End If
         End Sub
 
         ' Button: Select Color (Color Dialog)
@@ -124,23 +119,22 @@
 
         ' Button: Draw Waveforms
         Private Sub drawWaveformsButton_Click(sender As Object, e As EventArgs)
-            Using g As Graphics = displayPictureBox.CreateGraphics()
-                ' Clear the picture box
-                g.Clear(Color.White)
+        Using g As Graphics = DisplayPictureBox.CreateGraphics()
+            g.Clear(Color.White)
 
-                ' Draw the 10x10 grid (graticule)
-                Dim gridSize As Integer = displayPictureBox.Width / 10
-                For i As Integer = 1 To 9
-                    g.DrawLine(Pens.Gray, i * gridSize, 0, i * gridSize, displayPictureBox.Height)
-                    g.DrawLine(Pens.Gray, 0, i * gridSize, displayPictureBox.Width, i * gridSize)
-                Next
+            ' Draw the 10x10 grid (graticule)
+            Dim gridSize As Integer = DisplayPictureBox.Width / 10
+            For i As Integer = 1 To 9
+                g.DrawLine(Pens.Gray, i * gridSize, 0, i * gridSize, DisplayPictureBox.Height)
+                g.DrawLine(Pens.Gray, 0, i * gridSize, DisplayPictureBox.Width, i * gridSize)
+            Next
 
-                ' Draw Sine, Cosine, and Tangent Waves
-                DrawWaveform(g, AddressOf Math.Sin, Color.Red, 0)
-                DrawWaveform(g, AddressOf Math.Cos, Color.Green, 1)
-                DrawWaveform(g, AddressOf Math.Tan, Color.Blue, 2)
-            End Using
-        End Sub
+            ' Draw Sine, Cosine, and Tangent Waves
+            DrawWaveform(g, AddressOf Math.Sin, Color.Red, 0)
+            DrawWaveform(g, AddressOf Math.Cos, Color.Green, 1)
+            DrawWaveform(g, AddressOf Math.Tan, Color.Blue, 2)
+        End Using
+    End Sub
 
         ' Function to draw waveform
         Private Sub DrawWaveform(g As Graphics, func As Func(Of Double, Double), color As Color, offset As Integer)
@@ -157,8 +151,7 @@
             g.DrawCurve(New Pen(color), points)
         End Sub
 
-        ' Button: Clear the PictureBox
-        Private Sub clearButton_Click(sender As Object, e As EventArgs)
+    Private Sub clearButton_Click(sender As Object, e As EventArgs)
             Using g As Graphics = displayPictureBox.CreateGraphics()
                 g.Clear(Color.White) ' Clear the picture box
             End Using
