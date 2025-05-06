@@ -1,4 +1,10 @@
-﻿Public Class EtchASketchForm
+﻿'Malachi Marlow
+'Spring 2025
+'RCET2265
+'Etch a Sketch
+'https://github.com/MalachiMarlow/etch-a-sketch.git
+
+Public Class EtchASketchForm
 
     Dim currentColor As Color = Color.Black
     Dim Drawing As Boolean = False
@@ -22,27 +28,27 @@
 
         ' Button: Select Color
         SelectColorButton.Text = "Select Color"
-        selectColorButton.Location = New Point(10, 500)
-        selectColorButton.Size = New Size(100, 30)
+        SelectColorButton.Location = New Point(10, 500)
+        SelectColorButton.Size = New Size(100, 30)
         AddHandler SelectColorButton.Click, AddressOf selectColorButton_Click
 
         ' Button: Draw Waveforms
         DrawWaveformsButton.Text = "Draw Waveforms"
-        drawWaveformsButton.Location = New Point(120, 500)
-        drawWaveformsButton.Size = New Size(120, 30)
-        drawWaveformsButton.DialogResult = DialogResult.Yes
+        DrawWaveformsButton.Location = New Point(120, 500)
+        DrawWaveformsButton.Size = New Size(120, 30)
+        DrawWaveformsButton.DialogResult = DialogResult.Yes
         AddHandler DrawWaveformsButton.Click, AddressOf drawWaveformsButton_Click
 
         ' Button: Clear
         ClearButton.Text = "Clear"
-        clearButton.Location = New Point(250, 500)
-        clearButton.Size = New Size(80, 30)
+        ClearButton.Location = New Point(250, 500)
+        ClearButton.Size = New Size(80, 30)
         AddHandler ClearButton.Click, AddressOf clearButton_Click
 
         ' Button: Exit
         ExitButton.Text = "Exit"
-        exitButton.Location = New Point(340, 500)
-        exitButton.Size = New Size(80, 30)
+        ExitButton.Location = New Point(340, 500)
+        ExitButton.Size = New Size(80, 30)
         AddHandler ExitButton.Click, AddressOf exitButton_Click
         'ExitButton.ToolTipText = "Exit the application"
 
@@ -79,10 +85,10 @@
 
 
         Me.Controls.Add(DisplayPictureBox)
-        Me.Controls.Add(selectColorButton)
-        Me.Controls.Add(drawWaveformsButton)
-        Me.Controls.Add(clearButton)
-        Me.Controls.Add(exitButton)
+        Me.Controls.Add(SelectColorButton)
+        Me.Controls.Add(DrawWaveformsButton)
+        Me.Controls.Add(ClearButton)
+        Me.Controls.Add(ExitButton)
     End Sub
 
     ' Event Handlers for Mouse actions on the PictureBox
@@ -104,21 +110,21 @@
         End If
     End Sub
 
-        Private Sub displayPictureBox_MouseClick(sender As Object, e As MouseEventArgs)
-            If e.Button = MouseButtons.Middle Then
+    Private Sub displayPictureBox_MouseClick(sender As Object, e As MouseEventArgs)
+        If e.Button = MouseButtons.Middle Then
             selectColorButton_Click(sender, e)
         End If
-        End Sub
+    End Sub
 
-        ' Button: Select Color (Color Dialog)
-        Private Sub selectColorButton_Click(sender As Object, e As EventArgs)
-            If colorDialog.ShowDialog() = DialogResult.OK Then
-                currentColor = colorDialog.Color
-            End If
-        End Sub
+    ' Button: Select Color (Color Dialog)
+    Private Sub selectColorButton_Click(sender As Object, e As EventArgs)
+        If colorDialog.ShowDialog() = DialogResult.OK Then
+            currentColor = colorDialog.Color
+        End If
+    End Sub
 
-        ' Button: Draw Waveforms
-        Private Sub drawWaveformsButton_Click(sender As Object, e As EventArgs)
+    ' Button: Draw Waveforms
+    Private Sub drawWaveformsButton_Click(sender As Object, e As EventArgs)
         Using g As Graphics = DisplayPictureBox.CreateGraphics()
             g.Clear(Color.White)
 
@@ -136,31 +142,31 @@
         End Using
     End Sub
 
-        ' Function to draw waveform
-        Private Sub DrawWaveform(g As Graphics, func As Func(Of Double, Double), color As Color, offset As Integer)
-            Dim width As Integer = displayPictureBox.Width
-            Dim height As Integer = displayPictureBox.Height
-            Dim points(width) As PointF
+    ' Function to draw waveform
+    Private Sub DrawWaveform(g As Graphics, func As Func(Of Double, Double), color As Color, offset As Integer)
+        Dim width As Integer = DisplayPictureBox.Width
+        Dim height As Integer = DisplayPictureBox.Height
+        Dim points(width) As PointF
 
-            For i As Integer = 0 To width - 1
-                Dim x As Single = i
-                Dim y As Single = CSng(height / 2 + height / 4 * func(2 * Math.PI * (x / width)))
-                points(i) = New PointF(x, y + offset * 40) ' Offset each waveform
-            Next
+        For i As Integer = 0 To width - 1
+            Dim x As Single = i
+            Dim y As Single = CSng(height / 2 + height / 4 * func(2 * Math.PI * (x / width)))
+            points(i) = New PointF(x, y + offset * 40) ' Offset each waveform
+        Next
 
-            g.DrawCurve(New Pen(color), points)
-        End Sub
+        g.DrawCurve(New Pen(color), points)
+    End Sub
 
     Private Sub clearButton_Click(sender As Object, e As EventArgs)
-            Using g As Graphics = displayPictureBox.CreateGraphics()
-                g.Clear(Color.White) ' Clear the picture box
-            End Using
-        End Sub
+        Using g As Graphics = DisplayPictureBox.CreateGraphics()
+            g.Clear(Color.White) ' Clear the picture box
+        End Using
+    End Sub
 
 
     Private Sub exitButton_Click(sender As Object, e As EventArgs)
-            Me.Close()
-        End Sub
+        Me.Close()
+    End Sub
 
 
 End Class
