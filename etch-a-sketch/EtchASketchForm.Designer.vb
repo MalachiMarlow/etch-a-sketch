@@ -49,6 +49,7 @@ Partial Class EtchASketchForm
         '
         'ExitButton
         '
+        Me.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.ExitButton.Location = New System.Drawing.Point(662, 400)
         Me.ExitButton.Name = "ExitButton"
         Me.ExitButton.Size = New System.Drawing.Size(126, 38)
@@ -76,8 +77,10 @@ Partial Class EtchASketchForm
         '
         'EtchASketchForm
         '
+        Me.AcceptButton = Me.DrawWaveformsButton
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.CancelButton = Me.ExitButton
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Controls.Add(Me.DrawWaveformsButton)
         Me.Controls.Add(Me.ClearButton)

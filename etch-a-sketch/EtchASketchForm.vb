@@ -4,6 +4,12 @@
 'Etch a Sketch
 'https://github.com/MalachiMarlow/etch-a-sketch.git
 
+Option Compare Text
+Option Explicit On
+Option Strict On
+
+Imports System.Threading.Thread
+
 Public Class EtchASketchForm
 
     Dim currentColor As Color = Color.Black
@@ -126,10 +132,12 @@ Public Class EtchASketchForm
     ' Button: Draw Waveforms
     Private Sub drawWaveformsButton_Click(sender As Object, e As EventArgs)
         Using g As Graphics = DisplayPictureBox.CreateGraphics()
+            shake()
             g.Clear(Color.White)
 
+
             ' Draw the 10x10 grid (graticule)
-            Dim gridSize As Integer = DisplayPictureBox.Width / 10
+            Dim gridSize As Integer = CInt(DisplayPictureBox.Width / 10)
             For i As Integer = 1 To 9
                 g.DrawLine(Pens.Gray, i * gridSize, 0, i * gridSize, DisplayPictureBox.Height)
                 g.DrawLine(Pens.Gray, 0, i * gridSize, DisplayPictureBox.Width, i * gridSize)
@@ -166,6 +174,17 @@ Public Class EtchASketchForm
 
     Private Sub exitButton_Click(sender As Object, e As EventArgs)
         Me.Close()
+    End Sub
+
+    Sub shake()
+        Dim shaking As Integer = 11
+
+        For i = 1 To 11
+            Me.Top += shaking
+            Me.Left += shaking
+            Sleep(100)
+            shaking *= 1
+        Next
     End Sub
 
 
